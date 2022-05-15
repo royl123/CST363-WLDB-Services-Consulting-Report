@@ -72,7 +72,7 @@ public class DataGenerate implements CommandLineRunner {
 			
 //			generate random address
 			String streetAddress = faker.address().streetAddress();
-			System.out.println(streetAddress);
+//			System.out.println(streetAddress);
 			
 			//generate random age
 			int age = ThreadLocalRandom.current().nextInt(1, 100 + 1);

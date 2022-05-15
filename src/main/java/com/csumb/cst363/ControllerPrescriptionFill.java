@@ -43,18 +43,30 @@ public class ControllerPrescriptionFill {
 	public String processFillForm(Prescription p,  Model model) {
 
 
-		// TODO  
+		try (Connection con = getConnection();) {
+			PreparedStatement ps = con.prepareStatement("insert into prescription(RXnumber, patient_name, pharmacy_name, pharmacy_address) values(?, ?, ?, ?)", 
+					Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, p.getRxid());
+			ps.setString(2, p.getPatientLastName());
+			ps.setString(3, p.getPharmacyName());
+			ps.setString(4, p.getPharmacyAddress());
 
-		// temporary code to set fake data for now.
-		p.setPharmacyID("70012345");
-		p.setCost(String.format("%.2f", 12.5));
-		p.setDateFilled( new java.util.Date().toString() );
-
-		// display the updated prescription
-
-		model.addAttribute("message", "Prescription has been filled.");
-		model.addAttribute("prescription", p);
-		return "prescription_show";
+			// temporary code to set fake data for now.
+			p.setPharmacyID("70012345");
+			p.setCost(String.format("%.2f", 12.5));
+			p.setDateFilled( new java.util.Date().toString());
+	
+			// display the updated prescription
+	
+			model.addAttribute("message", "Prescription has been filled.");
+			model.addAttribute("prescription", p);
+			return "prescription_show";
+		
+		} catch (SQLException e) {
+			model.addAttribute("message", "SQL Error."+e.getMessage());
+			model.addAttribute("prescription", p);
+			return "prescription_fill";	
+		}
 
 	}
 
