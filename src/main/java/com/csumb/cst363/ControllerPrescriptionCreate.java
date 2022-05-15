@@ -42,7 +42,7 @@ public class ControllerPrescriptionCreate {
 	public String newPrescription( Prescription p, Model model) {
 		
 		
-		// TODO 
+		
 		
 		// set fake data for auto-generated prescription id.
 		p.setRxid("RX1980031234");

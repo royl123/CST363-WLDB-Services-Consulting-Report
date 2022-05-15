@@ -18,12 +18,7 @@ public class Cst363Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String sql = "INSERT INTO doctor(ssn, name, specialty, year_experience) VALUES (?,?,?,?)";
-		int result = jdbcTemplate.update(sql, "987654321", "Robert Jackson", "cardiology", "20");
-		
-		if(result > 0) {
-			System.out.println("new row inserted");
-		}
+
 	}
 
 }
