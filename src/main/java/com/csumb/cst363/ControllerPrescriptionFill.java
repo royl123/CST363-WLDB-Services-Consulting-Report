@@ -2,7 +2,6 @@ package com.csumb.cst363;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -55,9 +54,8 @@ public class ControllerPrescriptionFill {
 			p.setPharmacyID("70012345");
 			p.setCost(String.format("%.2f", 12.5));
 			p.setDateFilled( new java.util.Date().toString());
-	
+
 			// display the updated prescription
-	
 			model.addAttribute("message", "Prescription has been filled.");
 			model.addAttribute("prescription", p);
 			return "prescription_show";
