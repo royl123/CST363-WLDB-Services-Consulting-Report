@@ -95,10 +95,10 @@ public class ControllerPatient {
    public String newPatient(Patient p, Model model) {
 
       try (Connection con = getConnection();) {    
-      PreparedStatement ps = con.prepareStatement("insert into patient(ssn, name, address, age) values (?,?,?,?)",
+      PreparedStatement ps = con.prepareStatement("insert into patient(ssn, fullname, address, age) values (?,?,?,?)",
             Statement.RETURN_GENERATED_KEYS);
       
-      ps.setString(1, p.getSSN());
+      ps.setString(1, p.getPSSN());
       ps.setString(2, p.getPatientFullName());
       ps.setString(3, p.getPatientAddress());
       ps.setInt(4, p.getPatientAge());
@@ -163,7 +163,7 @@ public class ControllerPatient {
         try (Connection con = getConnection();) {
         
          PreparedStatement ps = con.prepareStatement("Select fullname, patientAddress, patientAge, patientPrimaryName from patient where patientSSN =?");
-         ps.setString(1, p.getSSN());
+         ps.setString(1, p.getPSSN());
               
          ResultSet rs = ps.executeQuery();
          if (rs.next()) {
@@ -219,7 +219,7 @@ public class ControllerPatient {
 	      
 	      try (Connection con = getConnection();) {
          PreparedStatement ps = con.prepareStatement("Select fullname, patientAddress, patientAge, patientPrimaryName from patient where patientSSN =?");
-         ps.setString(1, p.getSSN());
+         ps.setString(1, p.getPSSN());
          
          ResultSet rs = ps.executeQuery();
          if(rs.next()) {
