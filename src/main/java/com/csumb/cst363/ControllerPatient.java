@@ -70,24 +70,6 @@ public class ControllerPatient {
    } */
 	
 	
-	/*
-	 * Process new patient registration	 */ // ///   ORIGINAL
-	@PostMapping("/patient/new")
-	public String newPatientOG(Patient p, Model model) {
-
-		// TODO
-
-		/*
-		 * Complete database logic to verify and process new patient
-		 */
-		// remove this fake data.
-		p.setPatientId("300198");
-		model.addAttribute("message", "Registration successful.");
-		model.addAttribute("patient", p);
-		return "patient_show";
-
-	}
-	
 	  /*
     * Process new patient registration 
     * Maybe working 5/21 */
@@ -120,42 +102,9 @@ public class ControllerPatient {
    }
 	
 	/*
-	 * Request blank form to search for patient by and and id
-	 */
-	@GetMapping("/patient/edit")
-	public String getPatientForm(Model model) {
-		return "patient_get";
-	}
-	/////////////////////// ORIGINAL
-	/*
 	 * Perform search for patient by patient id and name.
 	 */
-	@PostMapping("/patient/show")
-	public String getPatientFormOG(@RequestParam("patientId") String patientId, @RequestParam("last_name") String last_name,
-			Model model) {
-		// TODO
-		/*
-		 * code to search for patient by id and name retrieve patient data and primary
-		 * doctor  
-		 */		
-		// return fake data for now.
-		Patient p = new Patient();
-		p.setPatientId(patientId);
-		p.setLast_name(last_name);
-		p.setBirthdate("2001-01-01");
-		p.setStreet("123 Main");
-		p.setCity("SunCity");
-		p.setState("CA");
-		p.setZipcode("99999");
-		p.setPrimaryID(11111);
-		p.setPrimaryName("Dr. Watson");
-		p.setSpecialty("Family Medicine");
-		p.setYears("1992");
 
-		model.addAttribute("patient", p);
-		return "patient_show";
-	}
-	
 	////Kevin attempt
      @PostMapping("/patient/show")
       public String getPatientForm(Patient p, Model model) {
