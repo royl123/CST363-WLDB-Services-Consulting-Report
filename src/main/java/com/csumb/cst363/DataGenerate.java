@@ -55,8 +55,8 @@ public class DataGenerate implements CommandLineRunner {
 			System.out.println(" ");
 			
 			//Insert data into doctor column in db
-//			String sql = "INSERT INTO doctor(dSSN, name, specialty, years_experience) VALUES (?,?,?,?)";
-//			int result = jdbcTemplate.update(sql, ssn, fullName, specialty, yrOfExp);
+			String sql = "INSERT INTO doctor(dSSN, name, specialty, years_experience) VALUES (?,?,?,?)";
+			int result = jdbcTemplate.update(sql, ssn, fullName, specialty, yrOfExp);
 			
 		}
 		
@@ -105,8 +105,8 @@ public class DataGenerate implements CommandLineRunner {
 	 		System.out.println(pri_dssn);
 			
 			//Insert data into patient column in db
-//			String sql = "INSERT INTO patient(ssn, name, address, age, doctor_dSSN, primary_physician_dssn) VALUES (?,?,?,?,?,?)";
-//			int result = jdbcTemplate.update(sql, ssn, fullName, streetAddress, age, dSSN, pri_dssn);
+			String sql = "INSERT INTO patient(ssn, name, address, age, doctor_dSSN, primary_physician_dssn) VALUES (?,?,?,?,?,?)";
+			int result = jdbcTemplate.update(sql, ssn, fullName, streetAddress, age, dSSN, pri_dssn);
 		
 		}
 		
@@ -187,8 +187,8 @@ public class DataGenerate implements CommandLineRunner {
 			
 			
 	 		//Assuming drug table already has values i.e. tradeName1..100, insert into prescription table
-//			String sql = "INSERT INTO prescription(RXnumber, phy_ssn, date_prescribed, quantity, trade_name, generic_name, pharma_id, patient_name, drug_trade_name, patient_ssn, doctor_dSSN) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-//			int result = jdbcTemplate.update(sql, rx, phySSN, ld, quantity, tradeName,genName, pharmaID, fullName, tradeName, pSSN, dSSN);
+			String sql = "INSERT INTO prescription(RXnumber, phy_ssn, date_prescribed, quantity, trade_name, generic_name, pharma_id, patient_name, drug_trade_name, patient_ssn, doctor_dSSN) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+			int result = jdbcTemplate.update(sql, rx, phySSN, ld, quantity, tradeName,genName, pharmaID, fullName, tradeName, pSSN, dSSN);
 			
 		}
 	}
