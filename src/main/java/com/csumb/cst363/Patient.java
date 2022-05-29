@@ -28,7 +28,7 @@ public class Patient {
 	private String patientPrimaryName;
 	
 	//Kevin Added
-	public String getSSN() {
+	public String getPSSN() {
 	   return patientSSN;
 	}
 	public void setPatientSSN(String patientSSN) {
