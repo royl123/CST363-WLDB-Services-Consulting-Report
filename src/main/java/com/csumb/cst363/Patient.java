@@ -18,9 +18,50 @@ public class Patient {
 	private int primaryID;       
 	private String primaryName;  
 	private String specialty;    
-	private String years;       
-
+	private String years;    
 	
+	//kevin added
+	private String patientSSN;
+	private String fullname;
+	private String patientAddress;
+	private int patientAge;
+	private String patientPrimaryName;
+	
+	//Kevin Added
+	public String getSSN() {
+	   return patientSSN;
+	}
+	public void setPatientSSN(String patientSSN) {
+	   this.patientSSN = patientSSN;
+	}
+   public String getPatientFullName() {
+      return fullname;
+   }
+   public void setPatientFullName(String fullname)
+   {
+      this.fullname = fullname;
+   }
+   public String getPatientAddress() {
+      return patientAddress;
+   }
+   public void setPatientAddress(String patientAddress) {
+      this.patientAddress = patientAddress;
+   }
+   public int getPatientAge() {
+      return patientAge;
+   }
+   public void setPatientAge(int patientAge) {
+      this.patientAge = patientAge;
+   }
+   public String getPatientPrimaryName() {
+      return patientPrimaryName;
+   }
+   public void setPatientPrimaryName(String patientPrimaryName) {
+      this.patientPrimaryName = patientPrimaryName;
+   }
+   
+  
+  // OG
 	public String getPatientId() {
 		return patientId;
 	}

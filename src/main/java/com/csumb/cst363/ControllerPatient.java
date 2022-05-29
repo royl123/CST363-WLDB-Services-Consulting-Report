@@ -37,10 +37,43 @@ public class ControllerPatient {
 		return "patient_register";
 	}
 	
+	//////////////////////////////////////
+	  /*
+    * Process doctor registration.
+   
+   @PostMapping("/doctor/register")
+   public String createDoctor(Doctor doctor, Model model) {
+      
+      try (Connection con = getConnection();) {
+         PreparedStatement ps = con.prepareStatement("insert into doctor(last_name, first_name, specialty, practice_since,  ssn ) values(?, ?, ?, ?, ?)", 
+               Statement.RETURN_GENERATED_KEYS);
+         ps.setString(1, doctor.getLast_name());
+         ps.setString(2, doctor.getFirst_name());
+         ps.setString(3, doctor.getSpecialty());
+         ps.setString(4, doctor.getPractice_since_year());
+         ps.setString(5, doctor.getSsn());
+         
+         ps.executeUpdate();
+         ResultSet rs = ps.getGeneratedKeys();
+         if (rs.next()) doctor.setId((int)rs.getLong(1));
+      
+         // display message and patient information
+         model.addAttribute("message", "Registration successful.");
+         model.addAttribute("doctor", doctor);
+         return "doctor_show";
+         
+      } catch (SQLException e) {
+         model.addAttribute("message", "SQL Error."+e.getMessage());
+         model.addAttribute("doctor", doctor);
+         return "doctor_register";  
+      }
+   } */
+	
+	
 	/*
-	 * Process new patient registration	 */
+	 * Process new patient registration	 */ // ///   ORIGINAL
 	@PostMapping("/patient/new")
-	public String newPatient(Patient p, Model model) {
+	public String newPatientOG(Patient p, Model model) {
 
 		// TODO
 
@@ -55,6 +88,37 @@ public class ControllerPatient {
 
 	}
 	
+	  /*
+    * Process new patient registration 
+    * Maybe working 5/21 */
+   @PostMapping("/patient/new")
+   public String newPatient(Patient p, Model model) {
+
+      try (Connection con = getConnection();) {    
+      PreparedStatement ps = con.prepareStatement("insert into patient(ssn, name, address, age) values (?,?,?,?)",
+            Statement.RETURN_GENERATED_KEYS);
+      
+      ps.setString(1, p.getSSN());
+      ps.setString(2, p.getPatientFullName());
+      ps.setString(3, p.getPatientAddress());
+      ps.setInt(4, p.getPatientAge());
+      
+      ps.executeUpdate();
+      ResultSet rs = ps.getGeneratedKeys();
+      if (rs.next()) p.setPatientSSN((String)rs.getString(1));
+      
+      model.addAttribute("message", "Registration successful.");
+      model.addAttribute("patient", p);
+      return "patient_show";
+      
+      } catch (SQLException e) {
+         model.addAttribute("message", "SQL Error."+e.getMessage());
+         model.addAttribute("patient", p);
+         return "patient_register";  
+      }
+
+   }
+	
 	/*
 	 * Request blank form to search for patient by and and id
 	 */
@@ -62,21 +126,18 @@ public class ControllerPatient {
 	public String getPatientForm(Model model) {
 		return "patient_get";
 	}
-	
+	/////////////////////// ORIGINAL
 	/*
 	 * Perform search for patient by patient id and name.
 	 */
 	@PostMapping("/patient/show")
-	public String getPatientForm(@RequestParam("patientId") String patientId, @RequestParam("last_name") String last_name,
+	public String getPatientFormOG(@RequestParam("patientId") String patientId, @RequestParam("last_name") String last_name,
 			Model model) {
-
 		// TODO
-
 		/*
 		 * code to search for patient by id and name retrieve patient data and primary
 		 * doctor  
-		 */
-		
+		 */		
 		// return fake data for now.
 		Patient p = new Patient();
 		p.setPatientId(patientId);
@@ -94,12 +155,40 @@ public class ControllerPatient {
 		model.addAttribute("patient", p);
 		return "patient_show";
 	}
-
-	/*
+	
+	////Kevin attempt
+     @PostMapping("/patient/show")
+      public String getPatientForm(Patient p, Model model) {
+   
+        try (Connection con = getConnection();) {
+        
+         PreparedStatement ps = con.prepareStatement("Select fullname, patientAddress, patientAge, patientPrimaryName from patient where patientSSN =?");
+         ps.setString(1, p.getSSN());
+              
+         ResultSet rs = ps.executeQuery();
+         if (rs.next()) {
+            p.setPatientFullName(rs.getString(1));
+            p.setPatientAddress(rs.getString(2));
+            p.setPatientAge(rs.getInt(3));
+            p.setPatientPrimaryName(rs.getString(4));
+         }
+         model.addAttribute("patient", p);
+         return "patient_show";
+         
+        } catch (SQLException e) {
+            System.out.println("SQL error in getPatient "+e.getMessage());
+            model.addAttribute("message", "SQL Error."+e.getMessage());
+            model.addAttribute("patient", p);
+            return "patient_get";
+         }
+      }
+	     
+	     
+	/*  ////// ORIGINAL
 	 *  Display patient profile for patient id.
 	 */
 	@GetMapping("/patient/edit/{patientId}")
-	public String updatePatient(@PathVariable String patientId, Model model) {
+	public String updatePatientOG(@PathVariable String patientId, Model model) {
 
 		// TODO Complete database logic search for patient by id.
 
@@ -121,7 +210,40 @@ public class ControllerPatient {
 		model.addAttribute("patient", p);
 		return "patient_edit";
 	}
-	
+	//// Kevin
+	  @GetMapping("/patient/edit/{patientSSN}")
+	   public String updatePatient(@PathVariable String patientSSN, Model model) {
+
+	      Patient p = new Patient();
+	      p.setPatientId(patientSSN);
+	      
+	      try (Connection con = getConnection();) {
+         PreparedStatement ps = con.prepareStatement("Select fullname, patientAddress, patientAge, patientPrimaryName from patient where patientSSN =?");
+         ps.setString(1, p.getSSN());
+         
+         ResultSet rs = ps.executeQuery();
+         if(rs.next()) {
+            p.setPatientFullName(rs.getString(1));
+            p.setPatientAddress(rs.getString(2));
+            p.setPatientAge(rs.getInt(3));
+            p.setPatientPrimaryName(rs.getString(4));
+            
+         model.addAttribute("patient", p);
+	      return "patient_edit";
+	      }
+	      else {
+            model.addAttribute("message", "Patient not found.");
+            model.addAttribute("doctor", p);
+            return "patient_get";
+         }
+	   
+     } catch (SQLException e) {
+        model.addAttribute("message", "SQL Error."+e.getMessage());
+        model.addAttribute("doctor", p);
+        return "patient_get";
+     }
+	      
+     }
 	
 	/*
 	 * Process changes to patient profile.  
@@ -129,12 +251,33 @@ public class ControllerPatient {
 	@PostMapping("/patient/edit")
 	public String updatePatient(Patient p, Model model) {
 
-		// TODO
+	   try (Connection con = getConnection();) {
 
-		model.addAttribute("patient", p);
-		return "patient_show";
+	   PreparedStatement ps = con.prepareStatement("update patient set fullname=?, patientAddress=?, patientAge=?, patientPrimaryName=? where patientSSN =?");
+	   ps.setString(1, p.getPatientFullName());
+	   ps.setString(2, p.getPatientAddress());
+	   ps.setInt(3, p.getPatientAge());
+	   ps.setString(4, p.getPatientPrimaryName());
+	   
+      int rc = ps.executeUpdate();
+      if (rc==1) {
+         model.addAttribute("message", "Update successful");
+         model.addAttribute("doctor", p);
+         return "patient_show";
+         
+      }else {
+         model.addAttribute("message", "Error. Update was not successful");
+         model.addAttribute("doctor", p);
+         return "patient_edit";
+      }
 	}
-
+	   
+	   catch (SQLException e) {
+         model.addAttribute("message", "SQL Error."+e.getMessage());
+         model.addAttribute("doctor", p);
+         return "patient_edit";
+      }
+	}
 	/*
 	 * return JDBC Connection using jdbcTemplate in Spring Server
 	 */
