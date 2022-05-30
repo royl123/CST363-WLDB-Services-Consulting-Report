@@ -44,12 +44,15 @@ public class ControllerPrescriptionFill {
 
 
 		try (Connection con = getConnection();) {
-			PreparedStatement ps = con.prepareStatement("insert into prescription(RXnumber, patient_name, pharmacy_name, pharmacy_address) values(?, ?, ?, ?)", 
+			PreparedStatement ps = con.prepareStatement("insert into fill(prescription_RXnumber, patient_last_name, pharmacy_name, pharmacy_address) values(?, ?, ?, ?)", 
 					Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, p.getRxid());
 			ps.setString(2, p.getPatientLastName());
 			ps.setString(3, p.getPharmacyName());
 			ps.setString(4, p.getPharmacyAddress());
+				
+			String sql = "INSERT INTO fill(prescription_RXnumber, patient_last_name, pharmacy_name, pharmacy_address, fill_no) VALUES (?,?,?,?,?)";
+			int result = jdbcTemplate.update(sql, p.getRxid(), p.getPatientLastName(), p.getPharmacyName(),  p.getPharmacyAddress(), "1234567890");
 
 			// temporary code to set fake data for now.
 			p.setPharmacyID("70012345");

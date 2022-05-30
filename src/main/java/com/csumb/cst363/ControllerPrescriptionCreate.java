@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -54,9 +56,19 @@ public class ControllerPrescriptionCreate {
 			ps.setString(6, p.getPatientLastName());
 			ps.setString(7, p.getDrugName());
 			ps.setInt(8, p.getQuantity());
-
+			
+			LocalDate dateObj = LocalDate.now();
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	        String date = dateObj.format(formatter);
+			
+			String sql = "INSERT INTO prescription(RXnumber, phy_ssn, date_prescribed, doctor_dSSN, "
+					+ "trade_name, generic_name, pharma_id,"
+					+ "doc_first_name, doc_last_name, patient_ssn, patient_first_name, patient_last_name,"
+					+ " drug_trade_name, quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			int result = jdbcTemplate.update(sql, "1980031234", p.getDoctor_ssn(),date, p.getDoctor_ssn(), p.getDrugName(), "genericName", "987654321", p.getDoctorFirstName(), p.getDoctorLastName(), p.getPatient_ssn(), p.getPatientFirstName(), p.getPatientLastName(), p.getDrugName(), p.getQuantity());
+			
 			// set fake data for auto-generated prescription id.
-			p.setRxid("RX1980031234");
+			p.setRxid("1980031234");
 	
 			model.addAttribute("message", "Prescription created.");
 			model.addAttribute("prescription", p);
