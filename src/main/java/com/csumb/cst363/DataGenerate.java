@@ -21,6 +21,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.github.javafaker.*;
 
 // Author: Roy Luengas
+//UNCOMMENT INSERTS BEFORE RUNNING lines 82,138,& 218
+//COMMENT OUT BACK AGAIN AFTER RUNNING FILE ONCE
+
+
 @SpringBootApplication
 public class DataGenerate implements CommandLineRunner {
 	static final String DB_URL = "jdbc:mysql://localhost:3306/pharm";
@@ -65,10 +69,27 @@ public class DataGenerate implements CommandLineRunner {
 			System.out.println(yrOfExp);
 			System.out.println(" ");
 			
+			//generate random phone number 
+			String phoneNumber = String.format("%10d", random.nextInt(1000000000));
+			
+			//generate pharmacy
+			String pharmName=lastName+" Pharma";
+			
+			//generate random address
+			String streetAddress = faker.address().streetAddress();
+			System.out.println(streetAddress);
+			
+//----------------------------UNCOMMENT BELOW------------------------------
+			
+			//Handle pharmacy constraint
+//			String sqlPharm = "INSERT INTO pharmacy(name, address, phone_number ) VALUES (?,?,?)";
+//			int resultPharm = jdbcTemplate.update(sqlPharm, pharmName, streetAddress, phoneNumber);
+			
+			
 			//Insert data into doctor column in db
 //			String sql = "INSERT INTO doctor(dSSN, name, specialty, years_experience) VALUES (?,?,?,?)";
 //			int result = jdbcTemplate.update(sql, ssn, fullName, specialty, yrOfExp);
-//			
+		
 		}
 		
 		
@@ -83,6 +104,8 @@ public class DataGenerate implements CommandLineRunner {
 			//generate random name
 			Faker faker = new Faker();
 			String firstName = faker.name().firstName();
+			
+			String lastName = faker.name().lastName();
 			
 			//generate random address
 			String streetAddress = faker.address().streetAddress();
@@ -111,7 +134,8 @@ public class DataGenerate implements CommandLineRunner {
 	 		//generate random primary_physician_dssn
 			String pri_dssn = String.format("%09d", random.nextInt(1000000000));
 	 		System.out.println(pri_dssn);
-			
+
+//----------------------------UNCOMMENT BELOW------------------------------
 			//Insert data into patient column in db
 //			String sql = "INSERT INTO patient(ssn, name, address, age, doctor_dSSN, primary_physician_dssn) VALUES (?,?,?,?,?,?)";
 //			int result = jdbcTemplate.update(sql, ssn, firstName, streetAddress, age, dSSN, pri_dssn);
@@ -190,9 +214,12 @@ public class DataGenerate implements CommandLineRunner {
 			      } 
 			System.out.println("");
 			
-			//Handle drug table constraint first
-			String sqlDrug= "INSERT INTO drug(trade_name, generic_name) VALUES (?,?)";
-			int resultDrug = jdbcTemplate.update(sqlDrug, tradeName, genName);
+			
+//----------------------------UNCOMMENT BELOW------------------------------
+			
+			//Handle drug table constraint
+//			String sqlDrug= "INSERT INTO drug(trade_name, generic_name) VALUES (?,?)";
+//			int resultDrug = jdbcTemplate.update(sqlDrug, tradeName, genName);
 			
 			
 //			String sql = "INSERT INTO prescription(RXnumber, phy_ssn, date_prescribed, doctor_dSSN, "
