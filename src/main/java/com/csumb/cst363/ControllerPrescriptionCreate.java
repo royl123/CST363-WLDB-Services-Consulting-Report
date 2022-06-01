@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -60,12 +61,18 @@ public class ControllerPrescriptionCreate {
 			LocalDate dateObj = LocalDate.now();
 	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	        String date = dateObj.format(formatter);
-			
+	        
+	        Random random = new Random();
+	        String randnumb1 = String.format("%09d", random.nextInt(1000000000));
+	        
+	        Random random2 = new Random();
+	        String randnumb2 = String.format("%09d", random.nextInt(1000000000));
+	        
 			String sql = "INSERT INTO prescription(RXnumber, phy_ssn, date_prescribed, doctor_dSSN, "
 					+ "trade_name, generic_name, pharma_id,"
 					+ "doc_first_name, doc_last_name, patient_ssn, patient_first_name, patient_last_name,"
 					+ " drug_trade_name, quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			int result = jdbcTemplate.update(sql, "1980031234", p.getDoctor_ssn(),date, p.getDoctor_ssn(), p.getDrugName(), "genericName", "987654321", p.getDoctorFirstName(), p.getDoctorLastName(), p.getPatient_ssn(), p.getPatientFirstName(), p.getPatientLastName(), p.getDrugName(), p.getQuantity());
+			int result = jdbcTemplate.update(sql, randnumb1, p.getDoctor_ssn(),date, p.getDoctor_ssn(), p.getDrugName(), "genericName", randnumb2, p.getDoctorFirstName(), p.getDoctorLastName(), p.getPatient_ssn(), p.getPatientFirstName(), p.getPatientLastName(), p.getDrugName(), p.getQuantity());
 			
 			// set fake data for auto-generated prescription id.
 			p.setRxid("1980031234");

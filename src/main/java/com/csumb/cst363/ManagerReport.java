@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-//Author: Roy Luengas
+//Authors: Roy Luengas, Kevin Wical
 
 //Test by running DataGenerate file ONCE
 public class ManagerReport {

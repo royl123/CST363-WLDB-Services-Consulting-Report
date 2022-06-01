@@ -21,7 +21,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.github.javafaker.*;
 
 // Author: Roy Luengas
-//UNCOMMENT INSERTS BEFORE RUNNING lines 82,138,& 218
+//UNCOMMENT INSERTS BEFORE RUNNING lines 82,138,& 219
 //COMMENT OUT BACK AGAIN AFTER RUNNING FILE ONCE
 
 
@@ -84,9 +84,9 @@ public class DataGenerate implements CommandLineRunner {
 			//Handle pharmacy constraint
 //			String sqlPharm = "INSERT INTO pharmacy(name, address, phone_number ) VALUES (?,?,?)";
 //			int resultPharm = jdbcTemplate.update(sqlPharm, pharmName, streetAddress, phoneNumber);
-			
-			
-			//Insert data into doctor column in db
+//			
+//			
+//			//Insert data into doctor column in db
 //			String sql = "INSERT INTO doctor(dSSN, name, specialty, years_experience) VALUES (?,?,?,?)";
 //			int result = jdbcTemplate.update(sql, ssn, fullName, specialty, yrOfExp);
 		
@@ -136,6 +136,7 @@ public class DataGenerate implements CommandLineRunner {
 	 		System.out.println(pri_dssn);
 
 //----------------------------UNCOMMENT BELOW------------------------------
+	 		
 			//Insert data into patient column in db
 //			String sql = "INSERT INTO patient(ssn, name, address, age, doctor_dSSN, primary_physician_dssn) VALUES (?,?,?,?,?,?)";
 //			int result = jdbcTemplate.update(sql, ssn, firstName, streetAddress, age, dSSN, pri_dssn);
@@ -220,14 +221,14 @@ public class DataGenerate implements CommandLineRunner {
 			//Handle drug table constraint
 //			String sqlDrug= "INSERT INTO drug(trade_name, generic_name) VALUES (?,?)";
 //			int resultDrug = jdbcTemplate.update(sqlDrug, tradeName, genName);
-			
-			
+//			
+//			
 //			String sql = "INSERT INTO prescription(RXnumber, phy_ssn, date_prescribed, doctor_dSSN, "
 //					+ "trade_name, generic_name, pharma_id,"
 //					+ "doc_first_name, doc_last_name, patient_ssn, patient_first_name, patient_last_name,"
 //					+ " drug_trade_name, quantity) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 //			int result = jdbcTemplate.update(sql, rx, dSSN, ld, dSSN, tradeName, genName, dSSN, firstName, lastName, pSSN, firstName2, lastName2, tradeName, quantity);
-			
+//			
 		}
 	}
 }
